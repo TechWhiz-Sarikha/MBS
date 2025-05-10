@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineLux - Movies</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0321 0%, #4a0a3c 50%, #1e0a24 100%);
+            min-height: 100vh;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #ff3a8c;
+        }
+        
+        .logo span {
+            color: red;
+        }
+        
+        .page-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #ff69b4; /* Bright pink */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 5px 5px 15px rgba(255, 105, 180, 0.8), 
+                 -5px -5px 15px rgba(255, 182, 193, 0.6);
+    animation: glow 1s infinite alternate;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 40px; /* Adds space below the title */
+}
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 20px;
+}
+
+
+        /* Replace the current movie-container CSS with this updated version */
+.movie-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 25px;
+    width: 100%; /* Ensure it takes full width */
+    min-width: 0; /* This prevents overflow issues */
+}
+
+/* Add this to ensure the main-content maintains proper layout */
+.main-content {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .movie-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .movie-container {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+}
+        
+        .movie-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-height: 800px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            
+            transition: transform 0.3s ease;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(255, 58, 140, 0.3);
+        }
+        
+        .movie-poster {
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.05);
+        }
+        
+        .movie-format {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff3a8c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        .movie-info {
+            padding: 15px;
+        }
+        
+        .movie-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        
+        .movie-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        
+        .movie-meta span {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .movie-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .movie-duration {
+            display: flex;
+            align-items: center;
+        }
+        
+        .movie-duration i {
+            margin-right: 4px;
+            color: #ff3a8c;
+        }
+        
+        .movie-rating {
+            display: flex;
+            align-items: center;
+            color: #ffdb58;
+        }
+        
+        .movie-rating i {
+            margin-right: 4px;
+        }
+        
+        .movie-lang {
+            color: #9340ff;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .book-now a {
+    text-decoration: none; /* Remove underline */
+    color: white; /* Text color */
+    background-color:linear-gradient(to right, #ff3a8c, #9340ff); /* Button background color */
+    padding: 10px 20px; /* Button padding */
+    border-radius: 5px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    display: inline-block; /* Allow styling to take effect like a button */
+}
+
+.book-now a:hover {
+    background-color: linear-gradient(to right, #9340ff, #ff3a8c);
+    transition: background-color 0.3s;
+}
+
+        .book-now {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            background: linear-gradient(to right, #ff3a8c, #9340ff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+        
+        .book-now:hover {
+            background: linear-gradient(to right, #9340ff, #ff3a8c);
+            box-shadow: 0 5px 15px rgba(255, 58, 140, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* Filter Section */
+        .filters {
+            width: 280px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            height: fit-content;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .filter-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .filter-section {
+            margin-bottom: 20px;
+        }
+        
+        .filter-section h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .filter-section h3:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 20px;
+            background: linear-gradient(to bottom, #ff3a8c, #9340ff);
+            border-radius: 3px;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-option:hover {
+            background-color: rgba(255, 58, 140, 0.15);
+        }
+        
+        .filter-option.active {
+            background-color: rgba(255, 58, 140, 0.25);
+            color: #ffffff;
+            border-left: 3px solid #ff3a8c;
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-option.active .checkbox {
+            background-color: #ff3a8c;
+            border-color: #ff3a8c;
+        }
+        
+        .checkbox i {
+            color: white;
+            font-size: 12px;
+            visibility: hidden;
+        }
+        
+        .filter-option.active .checkbox i {
+            visibility: visible;
+        }
+        
+        .filter-toggle {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff3a8c, #9340ff);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(255, 58, 140, 0.4);
+            cursor: pointer;
+            z-index: 100;
+            font-size: 24px;
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+        }
+        
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .filters {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .filter-toggle {
+                display: flex;
+            }
+            
+            .filters {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                z-index: 1000;
+                overflow-y: auto;
+                transform: translateX(-100%);
+            }
+            
+            .filters.active {
+                transform: translateX(0);
+            }
+            
+            .close-filters {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                font-size: 24px;
+                cursor: pointer;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="#" class="logo">
+                <i class="fas fa-film"></i>
+                Cine<span>Lux</span>
+            </a>
+            <div class="nav-links">
+                <!-- Navigation links could go here -->
+            </div>
+        </header>
+        
+        <h1 class="page-title">Movie Listing</h1>
+        
+        <div class="main-content">
+            <div class="filters" id="filters">
+                <div class="close-filters" id="closeFilters">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="filter-title">Filters</div>
+                
+                <!-- Languages Filter -->
+                <div class="filter-section">
+                    <h3>Languages</h3>
+                    <div class="filter-options">
+                        <div class="filter-option" data-filter="language" data-value="Hindi">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Hindi
+                        </div>
+                        <div class="filter-option" data-filter="language" data-value="Tamil">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Tamil
+                        </div>
+                        <div class="filter-option" data-filter="language" data-value="Telugu">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Telugu
+                        </div>
+                        <div class="filter-option" data-filter="language" data-value="Malayalam">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Malayalam
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Genres Filter -->
+                <div class="filter-section">
+                    <h3>Genres</h3>
+                    <div class="filter-options">
+                        <div class="filter-option" data-filter="genre" data-value="Thriller">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Thriller
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Comedy">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Comedy
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Action">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Action
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Family">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Family
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Adventure">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Adventure
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Romantic">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Romantic
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Historical">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Historical
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Horror">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Horror
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Animation">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Animation
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Superhero">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Superhero
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Crime">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Crime
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Fantasy">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Fantasy
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Mystery">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Mystery
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Drama">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Drama
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Sports">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Sports
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Sci-Fi">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            Sci-Fi
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Formats Filter -->
+                <div class="filter-section">
+                    <h3>Formats</h3>
+                    <div class="filter-options">
+                        <div class="filter-option" data-filter="format" data-value="IMAX 2D">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            IMAX 2D
+                        </div>
+                        
+                        <div class="filter-option" data-filter="format" data-value="IMAX 3D">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            IMAX 3D
+                        </div>
+                        <div class="filter-option" data-filter="format" data-value="IMAX 2D & 3D">
+                            <div class="checkbox"><i class="fas fa-check"></i></div>
+                            IMAX 2D & 3D
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="movie-container" id="movieContainer">
+                <!-- Movies will be populated here by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="filter-toggle" id="filterToggle">
+        <i class="fas fa-filter"></i>
+    </div>
+    
+    <script>
+        // Movie data
+        const movies = [
+            {
+                title: "Maidaan",
+                language: "Hindi",
+                genres: ["Sports", "Drama"],
+                image: "https://via.placeholder.com/300x450?text=Maidaan",
+                duration: "2h 35m",
+                rating: 4.2
+            },
+            {
+                title: "Bade Miyan Chote Miyan",
+                language: "Hindi",
+                genres: ["Action", "Comedy"],
+                image: "https://via.placeholder.com/300x450?text=Bade+Miyan+Chote+Miyan",
+                duration: "2h 42m",
+                rating: 3.8
+            },
+            {
+                title: "Godzilla x Kong: The New Empire",
+                language: "Hindi",
+                genres: ["Action", "Sci-Fi"],
+                image: "https://via.placeholder.com/300x450?text=Godzilla+x+Kong",
+                duration: "2h 28m",
+                rating: 4.5
+            },
+            {
+                title: "Maharaja",
+                language: "Tamil",
+                genres: ["Action"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Maharaja",
+                duration: "2h 15m",
+                rating: 4.0
+            },
+            {
+                title: "Meiyazhagan",
+                language: "Tamil",
+                genres: ["Family"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Meiyazhagan",
+                duration: "2h 10m",
+                rating: 3.9
+            },
+            {
+                title: "Amaran",
+                language: "Tamil",
+                genres: ["Thriller"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Amaran",
+                duration: "2h 22m",
+                rating: 4.3
+            },
+            {
+                title: "Lubber Pandhu",
+                language: "Tamil",
+                genres: ["Drama"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Lubber+Pandhu",
+                duration: "1h 55m",
+                rating: 3.6
+            },
+            {
+                title: "Kanguva (2024)",
+                language: "Tamil",
+                genres: ["Fantasy"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Kanguva",
+                duration: "2h 40m",
+                rating: 4.1
+            },
+            {
+                title: "Tourist Family",
+                language: "Tamil",
+                genres: ["Comedy"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Tourist+Family",
+                duration: "2h 05m",
+                rating: 3.7
+            },
+            {
+                title: "Pushpa 2: The Rule (2024)",
+                language: "Telugu",
+                genres: ["Thriller"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Pushpa+2",
+                duration: "2h 50m",
+                rating: 4.8
+            },
+            {
+                title: "Kalinga (2024)",
+                language: "Telugu",
+                genres: ["Horror"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Kalinga",
+                duration: "2h 12m",
+                rating: 3.5
+            },
+            {
+                title: "HanuMan (2024)",
+                language: "Telugu",
+                genres: ["Fantasy"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=HanuMan",
+                duration: "2h 30m",
+                rating: 4.4
+            },
+            {
+                title: "Sookshmadarshini (2024)",
+                language: "Malayalam",
+                genres: ["Thriller"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Sookshmadarshini",
+                duration: "2h 08m",
+                rating: 4.2
+            },
+            {
+                title: "Bramayugam (2024)",
+                language: "Malayalam",
+                genres: ["Horror", "Thriller"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Bramayugam",
+                duration: "2h 18m",
+                rating: 4.6
+            },
+            {
+                title: "Vadakkan (2025)",
+                language: "Malayalam",
+                genres: ["Horror"],
+                format: "",
+                image: "https://via.placeholder.com/300x450?text=Vadakkan",
+                duration: "2h 25m",
+                rating: 4.0
+            }
+        ];
+
+        // Active filters
+        const activeFilters = {
+            language: [],
+            genre: [],
+            format: []
+        };
+
+        // Function to render movies
+        function renderMovies() {
+            const movieContainer = document.getElementById('movieContainer');
+            movieContainer.innerHTML = '';
+            let filteredMovies = movies;
+            // Apply language filter
+            if (activeFilters.language.length > 0) {
+                filteredMovies = filteredMovies.filter(movie => 
+                    activeFilters.language.includes(movie.language)
+                );
+            }
+            // Apply genre filter
+            if (activeFilters.genre.length > 0) {
+                filteredMovies = filteredMovies.filter(movie => 
+                    movie.genres.some(genre => activeFilters.genre.includes(genre))
+                );
+            }
+            // Apply format filter
+            if (activeFilters.format.length > 0) {
+                filteredMovies = filteredMovies.filter(movie => 
+                    activeFilters.format.includes(movie.format)
+                );
+            }
+            
+            // Display filtered movies or show no results message
+            if (filteredMovies.length === 0) {
+                movieContainer.innerHTML = '<div class="no-results">No movies match your selected filters</div>';
+                return;
+            }
+            
+            filteredMovies.forEach(movie => {
+                const movieCard = document.createElement('div');
+                movieCard.classList.add('movie-card');
+                
+                const formatBadge = movie.format ? 
+                    `<div class="movie-format">${movie.format}</div>` : '';
+                
+                const genreSpans = movie.genres.map(genre => 
+                    `<span>${genre}</span>`
+                ).join('');
+                
+                movieCard.innerHTML = `
+    <div class="movie-poster">
+        <img src="${movie.image}" alt="${movie.title}">
+        ${formatBadge}
+    </div>
+    <div class="movie-info">
+        <h3 class="movie-title">${movie.title}</h3>
+        <div class="movie-meta">
+            ${genreSpans}
+        </div>
+        <div class="movie-details">
+            <div class="movie-duration">
+                <i class="far fa-clock"></i> ${movie.duration}
+            </div>
+            <div class="movie-rating">
+                <i class="fas fa-star"></i> ${movie.rating}
+            </div>
+        </div>
+        <div class="movie-lang">${movie.language}</div>
+        <button class="book-now">
+            <a href="login.html?movie=${encodeURIComponent(movie.title)}">Book Now</a>
+        </button>
+    </div>
+`;    
+console.log("Created card for movie:", movie.title, "with link to:", `login.html?movie=${encodeURIComponent(movie.title)}`);       
+                movieContainer.appendChild(movieCard);
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMovies();
+            
+            // Handle filter option clicks
+            const filterOptions = document.querySelectorAll('.filter-option');
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const filterType = this.getAttribute('data-filter');
+                    const filterValue = this.getAttribute('data-value');
+                    
+                    // Toggle active class
+                    this.classList.toggle('active');
+                    
+                    // Update active filters
+                    if (this.classList.contains('active')) {
+                        activeFilters[filterType].push(filterValue);
+                    } else {
+                        activeFilters[filterType] = activeFilters[filterType].filter(value => value !== filterValue);
+                    }
+                    
+                    // Re-render movies
+                    renderMovies();
+                });
+            });
+            
+            // Mobile filter toggle
+            const filterToggle = document.getElementById('filterToggle');
+            const filters = document.getElementById('filters');
+            const closeFilters = document.getElementById('closeFilters');
+            
+            filterToggle.addEventListener('click', function() {
+                filters.classList.add('active');
+            });
+            
+            closeFilters.addEventListener('click', function() {
+                filters.classList.remove('active');
+            });
+
+            // Book Now button functionality
+            
+            document.addEventListener('DOMContentLoaded', function() {
+    // Get the movie parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+const movieTitle = urlParams.get('movie') || 'Movie Title';
+console.log("Login page URL:", window.location.href);
+console.log("Login page received movie param:", movieParam);
+    // Update the page with the movie title
+    if (movieTitle) {
+        document.getElementById('movie-title').textContent = movieTitle;
+        // Also update any other elements that need to show movie-specific information
+        // fetchMovieDetails(movieTitle); // You might have a function to get additional details
+    }
+});
+        });
+    </script>
+</body>
+</html>

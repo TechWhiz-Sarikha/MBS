@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Movie Details - Movie Ticket Booking</title>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Movie Ticket Booking</h1>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="movies.html">Movies</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="user-dashboard.html">Dashboard</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="movie-details-section">
+      <h2 id="movie-title"></h2>
+      <img id="movie-poster" alt="Movie Poster" />
+      <p id="movie-description"></p>
+      <p><strong>Duration:</strong> <span id="movie-duration"></span> minutes</p>
+
+      <h3>Showtimes</h3>
+      <div id="showtimes-list"></div>
+    </section>
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/movie-details.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadMovieDetails();
+    });
+  </script>
+</body>
+</html>

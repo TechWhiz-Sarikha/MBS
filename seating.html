@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Seat Booking</title>
+    <style>
+         :root {
+            --primary-color: rgba(74, 10, 60, 1);
+            --primary-color-lighter: rgba(100, 15, 80, 1);
+            --accent-color: #ff6b4a;
+            --text-color: #ffffff;
+            --seat-available: #2196F3;
+            --seat-selected: #FF5722;
+            --seat-occupied: #888888;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-color-lighter));
+            color: var(--text-color);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+h1 {
+    position: relative;
+    text-align: center;
+    font-size: 3.8rem;
+    font-family: 'Audiowide', cursive;
+    text-transform: uppercase;
+    color: #ffe6d0;
+    letter-spacing: 8px;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, #ff6b4a, #ffcc70);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 
+        1px 1px 5px rgba(255, 107, 74, 0.3),
+        -1px -1px 5px rgba(255, 255, 255, 0.05);
+    animation: neonPulse 3s ease-in-out infinite;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -75%;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.8), transparent);
+    transform: rotate(25deg);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes neonPulse {
+    0%, 100% {
+        text-shadow:
+            0 0 4px #ff6b4a,
+            0 0 8px #ff6b4a,
+            0 0 10px #ffcc70;
+    }
+    50% {
+        text-shadow:
+            0 0 2px #ff6b4a,
+            0 0 6px #ff6b4a,
+            0 0 8px #ffcc70;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        left: -75%;
+        opacity: 0;
+    }
+    50% {
+        left: 125%;
+        opacity: 1;
+    }
+    100% {
+        left: 125%;
+        opacity: 0;
+    }
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.4rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    letter-spacing: 2px;
+    opacity: 0.95;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #ffdac1, #ffd3b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 4px rgba(255, 184, 138, 0.4);
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 0.95;
+        transform: translateY(0);
+    }
+}
+
+
+.screen-container {
+    perspective: 1000px;
+    margin-bottom: 60px;
+}
+
+.screen {
+    height: 120px;
+    background: rgba(255, 255, 255, 0.05);
+    transform: rotateX(-30deg);
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+    position: relative;
+    animation: screenGlow 5s ease-in-out infinite alternate;
+}
+
+.screen::before {
+    content: "SCREEN";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.6rem;
+    letter-spacing: 8px;
+}
+
+.screen::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: screenScan 3s linear infinite;
+}
+
+.category-section {
+    margin-bottom: 50px;
+}
+
+.category-header {
+    font-size: 1.7rem;
+    text-align: center;
+    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(255, 107, 74, 0.1);
+}
+
+.category-header .price {
+    margin-left: 10px;
+    color: #ffd966;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.row-label {
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 8px;
+    opacity: 0.8;
+}
+
+.seat {
+    height: 30px;
+    width: 30px;
+    margin: 4px;
+    border-radius: 6px;
+    background-color: var(--seat-available);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 188, 212, 0.4);
+}
+
+.seat:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.6);
+}
+
+.seat.selected {
+    background-color: var(--seat-selected);
+    box-shadow: 0 0 15px rgba(233, 30, 99, 0.6);
+}
+
+.seat.occupied {
+    background-color: var(--seat-occupied);
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.6;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 40px 0;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.legend-color {
+    height: 20px;
+    width: 20px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.legend-available {
+    background-color: var(--seat-available);
+}
+
+.legend-selected {
+    background-color: var(--seat-selected);
+}
+
+.legend-occupied {
+    background-color: var(--seat-occupied);
+}
+
+.footer {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.03);
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    text-align: center;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    opacity: 0.75;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+.checkout-btn {
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, var(--accent-color), #ff512f);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 107, 74, 0.4);
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #ff4a24, #ff6b4a);
+    transform: scale(1.05);
+    box-shadow: 0 8px 18px rgba(255, 107, 74, 0.5);
+}
+
+@keyframes screenGlow {
+    0% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.2); }
+    100% { box-shadow: 0 0 50px rgba(255, 255, 255, 0.4); }
+}
+
+@keyframes screenScan {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+@media (max-width: 768px) {
+    .seat {
+        height: 20px;
+        width: 20px;
+        font-size: 8px;
+    }
+
+    .category-header {
+        font-size: 1.3rem;
+    }
+
+    .row-label {
+        width: 20px;
+        font-size: 0.8rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BOOK YOUR SEATS</h1>
+        <p class="subtitle">Select your preferred seats for an unforgettable movie experience</p>
+        
+        <div class="screen"></div>
+        
+        <div class="category-section">
+            <div class="category-header">BUDGET<span class="price">₹190</span></div>
+            
+            <div class="row">
+                <div class="row-label">EA</div>
+                <div class="seat" data-row="EA" data-seat="1">1</div>
+                <div class="seat" data-row="EA" data-seat="2">2</div>
+                <div class="seat" data-row="EA" data-seat="3">3</div>
+                <div class="seat" data-row="EA" data-seat="4">4</div>
+                <div class="seat" data-row="EA" data-seat="5">5</div>
+                <div class="seat" data-row="EA" data-seat="6">6</div>
+                <div class="seat" data-row="EA" data-seat="7">7</div>
+                <div class="seat" data-row="EA" data-seat="8">8</div>
+                <div class="seat" data-row="EA" data-seat="9">9</div>
+                <div class="seat" data-row="EA" data-seat="10">10</div>
+                <div class="seat" data-row="EA" data-seat="11">11</div>
+                <div class="seat" data-row="EA" data-seat="12">12</div>
+                <div class="seat" data-row="EA" data-seat="13">13</div>
+                <div class="seat" data-row="EA" data-seat="14">14</div>
+                <div class="seat" data-row="EA" data-seat="15">15</div>
+                <div class="seat" data-row="EA" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+            </div>
+            
+            <div class="row">
+                <div class="row-label">EB</div>
+                <div class="seat" data-row="EB" data-seat="1">1</div>
+                <div class="seat" data-row="EB" data-seat="2">2</div>
+                <div class="seat" data-row="EB" data-seat="3">3</div>
+                <div class="seat" data-row="EB" data-seat="4">4</div>
+                <div class="seat occupied" data-row="EB" data-seat="5">5</div>
+                <div class="seat occupied" data-row="EB" data-seat="6">6</div>
+                <div class="seat" data-row="EB" data-seat="7">7</div>
+                <div class="seat" data-row="EB" data-seat="8">8</div>
+                <div class="seat" data-row="EB" data-seat="9">9</div>
+                <div class="seat" data-row="EB" data-seat="10">10</div>
+                <div class="seat" data-row="EB" data-seat="11">11</div>
+                <div class="seat" data-row="EB" data-seat="12">12</div>
+                <div class="seat" data-row="EB" data-seat="13">13</div>
+                <div class="seat" data-row="EB" data-seat="14">14</div>
+                <div class="seat" data-row="EA" data-seat="15">15</div>
+                <div class="seat" data-row="EA" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+            </div>
+            </div>
+            
+            <div class="row">
+                <div class="row-label">EC</div>
+                <div class="seat" data-row="EC" data-seat="1">1</div>
+                <div class="seat" data-row="EC" data-seat="2">2</div>
+                <div class="seat" data-row="EC" data-seat="3">3</div>
+                <div class="seat" data-row="EC" data-seat="4">4</div>
+                <div class="seat" data-row="EC" data-seat="5">5</div>
+                <div class="seat" data-row="EC" data-seat="6">6</div>
+                <div class="seat" data-row="EC" data-seat="7">7</div>
+                <div class="seat" data-row="EC" data-seat="8">8</div>
+                <div class="seat" data-row="EC" data-seat="9">9</div>
+                <div class="seat" data-row="EC" data-seat="10">10</div>
+                <div class="seat" data-row="EC" data-seat="11">11</div>
+                <div class="seat" data-row="EC" data-seat="12">12</div>
+                <div class="seat" data-row="EC" data-seat="13">13</div>
+                <div class="seat" data-row="EC" data-seat="14">14</div>
+                <div class="seat" data-row="EA" data-seat="15">15</div>
+                <div class="seat" data-row="EA" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="category-section">
+            <div class="category-header">ELITE <span class="price">₹300</span></div>
+            
+            <div class="row">
+                <div class="row-label">CA</div>
+                <div class="seat" data-row="CA" data-seat="1">1</div>
+                <div class="seat" data-row="CA" data-seat="2">2</div>
+                <div class="seat" data-row="CA" data-seat="3">3</div>
+                <div class="seat" data-row="CA" data-seat="4">4</div>
+                <div class="seat" data-row="CA" data-seat="5">5</div>
+                <div class="seat" data-row="CA" data-seat="6">6</div>
+                <div class="seat" data-row="CA" data-seat="7">7</div>
+                <div class="seat" data-row="CA" data-seat="8">8</div>
+                <div class="seat" data-row="CA" data-seat="9">9</div>
+                <div class="seat" data-row="CA" data-seat="10">10</div>
+                <div class="seat" data-row="CA" data-seat="11">11</div>
+                <div class="seat" data-row="CA" data-seat="12">12</div>
+                <div class="seat" data-row="CA" data-seat="13">13</div>
+                <div class="seat" data-row="CA" data-seat="14">14</div>
+                <div class="seat" data-row="CA" data-seat="15">15</div>
+                <div class="seat" data-row="EA" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+            </div>
+            </div>
+            
+            <div class="row">
+                <div class="row-label">CB</div>
+                <div class="seat" data-row="CB" data-seat="1">1</div>
+                <div class="seat" data-row="CB" data-seat="2">2</div>
+                <div class="seat occupied" data-row="CB" data-seat="3">3</div>
+                <div class="seat occupied" data-row="CB" data-seat="4">4</div>
+                <div class="seat" data-row="CB" data-seat="5">5</div>
+                <div class="seat" data-row="CB" data-seat="6">6</div>
+                <div class="seat" data-row="CB" data-seat="7">7</div>
+                <div class="seat" data-row="CB" data-seat="8">8</div>
+                <div class="seat" data-row="CB" data-seat="9">9</div>
+                <div class="seat" data-row="CB" data-seat="10">10</div>
+                <div class="seat" data-row="CB" data-seat="11">11</div>
+                <div class="seat" data-row="CB" data-seat="12">12</div>
+                <div class="seat" data-row="CB" data-seat="13">13</div>
+                <div class="seat" data-row="CB" data-seat="14">14</div>
+                <div class="seat" data-row="CA" data-seat="15">15</div>
+                <div class="seat" data-row="EA" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+            </div>
+            
+            <div class="row">
+                <div class="row-label">CC</div>
+                <div class="seat" data-row="CC" data-seat="1">1</div>
+                <div class="seat" data-row="CC" data-seat="2">2</div>
+                <div class="seat" data-row="CC" data-seat="3">3</div>
+                <div class="seat" data-row="CC" data-seat="4">4</div>
+                <div class="seat" data-row="CC" data-seat="5">5</div>
+                <div class="seat" data-row="CC" data-seat="6">6</div>
+                <div class="seat" data-row="CC" data-seat="7">7</div>
+                <div class="seat" data-row="CC" data-seat="8">8</div>
+                <div class="seat" data-row="CC" data-seat="9">9</div>
+                <div class="seat" data-row="CC" data-seat="10">10</div>
+                <div class="seat" data-row="CC" data-seat="11">11</div>
+                <div class="seat" data-row="CC" data-seat="12">12</div>
+                <div class="seat" data-row="CC" data-seat="13">13</div>
+                <div class="seat" data-row="CC" data-seat="14">14</div>
+                <div class="seat" data-row="CC" data-seat="15">15</div>
+                <div class="seat" data-row="CC" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+
+            </div>
+            
+            <div class="row">
+                <div class="row-label">CD</div>
+                <div class="seat" data-row="CD" data-seat="1">1</div>
+                <div class="seat" data-row="CD" data-seat="2">2</div>
+                <div class="seat" data-row="CD" data-seat="3">3</div>
+                <div class="seat" data-row="CD" data-seat="4">4</div>
+                <div class="seat" data-row="CD" data-seat="5">5</div>
+                <div class="seat" data-row="CD" data-seat="6">6</div>
+                <div class="seat" data-row="CD" data-seat="7">7</div>
+                <div class="seat" data-row="CD" data-seat="8">8</div>
+                <div class="seat" data-row="CD" data-seat="9">9</div>
+                <div class="seat" data-row="CD" data-seat="10">10</div>
+                <div class="seat occupied" data-row="CD" data-seat="11">11</div>
+                <div class="seat occupied" data-row="CD" data-seat="12">12</div>
+                <div class="seat" data-row="CD" data-seat="13">13</div>
+                <div class="seat" data-row="CD" data-seat="14">14</div>
+                <div class="seat" data-row="CD" data-seat="15">15</div>
+                <div class="seat" data-row="CD" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+            </div>
+        </div>
+        
+        <div class="category-section">
+            <div class="category-header">PREMIUM <span class="price">₹500</span></div>
+            
+            <div class="row">
+                <div class="row-label">BA</div>
+                <div class="seat occupied" data-row="BA" data-seat="1">1</div>
+                <div class="seat occupied" data-row="BA" data-seat="2">2</div>
+                <div class="seat occupied" data-row="BA" data-seat="3">3</div>
+                <div class="seat occupied" data-row="BA" data-seat="4">4</div>
+                <div class="seat" data-row="BA" data-seat="5">5</div>
+                <div class="seat" data-row="BA" data-seat="6">6</div>
+                <div class="seat" data-row="BA" data-seat="7">7</div>
+                <div class="seat" data-row="BA" data-seat="8">8</div>
+                <div class="seat" data-row="BA" data-seat="9">9</div>
+                <div class="seat" data-row="BA" data-seat="10">10</div>
+                <div class="seat" data-row="BA" data-seat="11">11</div>
+                <div class="seat" data-row="BA" data-seat="12">12</div>
+                <div class="seat" data-row="BA" data-seat="13">13</div>
+                <div class="seat" data-row="BA" data-seat="14">14</div>
+                <div class="seat" data-row="BA" data-seat="15">15</div>
+                <div class="seat" data-row="BA" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+            </div>
+            
+            <div class="row">
+                <div class="row-label">BB</div>
+                <div class="seat" data-row="BB" data-seat="1">1</div>
+                <div class="seat" data-row="BB" data-seat="2">2</div>
+                <div class="seat" data-row="BB" data-seat="3">3</div>
+                <div class="seat" data-row="BB" data-seat="4">4</div>
+                <div class="seat" data-row="BB" data-seat="5">5</div>
+                <div class="seat" data-row="BB" data-seat="6">6</div>
+                <div class="seat" data-row="BB" data-seat="7">7</div>
+                <div class="seat" data-row="BB" data-seat="8">8</div>
+                <div class="seat" data-row="BB" data-seat="9">9</div>
+                <div class="seat" data-row="BB" data-seat="10">10</div>
+                <div class="seat" data-row="BB" data-seat="11">11</div>
+                <div class="seat" data-row="BB" data-seat="12">12</div>
+                <div class="seat" data-row="BB" data-seat="13">13</div>
+                <div class="seat" data-row="BB" data-seat="14">14</div>
+                <div class="seat" data-row="BB" data-seat="15">15</div>
+                <div class="seat" data-row="BB" data-seat="16">16</div>
+                <div class="seat" data-row="EA" data-seat="17">17</div>
+                <div class="seat" data-row="EA" data-seat="18">18</div>
+                <div class="seat" data-row="EA" data-seat="19">19</div>
+                <div class="seat" data-row="EA" data-seat="20">20</div>
+            </div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color legend-available"></div>
+                <span>Available</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-selected"></div>
+                <span>Selected</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-occupied"></div>
+                <span>Occupied</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="info">
+                <div class="info-item">
+                    <div class="info-label">Selected Seats:</div>
+                    <div class="info-value" id="selected-seats">0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Total Price:</div>
+                    <div class="info-value" id="total-price">₹0</div>
+                </div>
+            </div>
+            <a href="snacks.html" class="checkout-btn">Proceed to Checkout</a>
+
+        </div>
+    </div>
+    
+    <script>
+        setInterval(() => {
+            const screen = document.querySelector('.screen');
+            screen.style.boxShadow = `0 0 ${20 + Math.random() * 20}px rgba(255, 255, 255, ${0.2 + Math.random() * 0.2})`;
+        }, 1000);
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const seats = document.querySelectorAll('.seat:not(.occupied)');
+            const selectedSeatsElement = document.getElementById('selected-seats');
+            const totalPriceElement = document.getElementById('total-price');
+            const proceedBtn = document.getElementById('proceed-btn');
+    
+            let selectedSeats = [];
+    
+            // ✅ CLEAR OLD SELECTION ON FRESH LOAD
+            localStorage.removeItem('selectedSeats');
+            document.querySelectorAll('.seat.selected').forEach(seat => seat.classList.remove('selected'));
+            selectedSeatsElement.innerText = '0';
+            totalPriceElement.innerText = '₹0.00';
+    
+            setRandomOccupied();
+    
+            // Add click event to seats
+            seats.forEach(seat => {
+                seat.addEventListener('click', () => {
+                    seat.classList.toggle('selected');
+                    updateSelectedCount();
+    
+                    const seatInfo = {
+                        row: seat.getAttribute('data-row'),
+                        seat: seat.getAttribute('data-seat')
+                    };
+    
+                    const seatIndex = selectedSeats.findIndex(
+                        selected => selected.row === seatInfo.row && selected.seat === seatInfo.seat
+                    );
+    
+                    if (seat.classList.contains('selected')) {
+                        if (seatIndex === -1) {
+                            selectedSeats.push(seatInfo);
+                        }
+                    } else {
+                        if (seatIndex !== -1) {
+                            selectedSeats.splice(seatIndex, 1);
+                        }
+                    }
+    
+                    localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+                });
+            });
+    
+            function updateSelectedCount() {
+                const selectedSeatsDOM = document.querySelectorAll('.seat.selected');
+                selectedSeatsElement.innerText = selectedSeatsDOM.length;
+    
+                let totalPrice = 0;
+                selectedSeatsDOM.forEach(seat => {
+                    const row = seat.getAttribute('data-row').substring(0, 1);
+                    if (row === 'E') totalPrice += 190;
+                    else if (row === 'C') totalPrice += 300;
+                    else if (row === 'B') totalPrice += 500;
+                });
+    
+                totalPriceElement.innerText = `₹${totalPrice.toFixed(2)}`;
+            }
+    
+            function setRandomOccupied() {
+                const allSeats = document.querySelectorAll('.seat:not(.occupied)');
+                const seatsToOccupy = Math.floor(allSeats.length * 0.1);
+                for (let i = 0; i < seatsToOccupy; i++) {
+                    const randomIndex = Math.floor(Math.random() * allSeats.length);
+                    if (!allSeats[randomIndex].classList.contains('occupied')) {
+                        allSeats[randomIndex].classList.add('occupied');
+                    }
+                }
+            }
+    
+            // Proceed to checkout
+            proceedBtn.addEventListener('click', () => {
+                const selectedCount = document.querySelectorAll('.seat.selected').length;
+                if (selectedCount === 0) {
+                    alert('Please select at least one seat to proceed.');
+                } else {
+                    alert(`You selected ${selectedCount} seats. Total price: ${totalPriceElement.innerText}. Proceeding to checkout!`);
+                    // window.location.href = 'checkout.html';
+                }
+            });
+        });
+    </script>
+    

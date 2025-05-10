@@ -1,0 +1,101 @@
+{
+  "info": {
+    "_postman_id": "12345678-abcd-efgh-ijkl-1234567890ab",
+    "name": "Movie Ticket Booking System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"john_doe\",\n    \"password\": \"password123\",\n    \"email\": \"john@example.com\",\n    \"role\": \"USER\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "users"]
+        }
+      }
+    },
+    {
+      "name": "Create Movie",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Inception\",\n    \"description\": \"A mind-bending thriller\",\n    \"duration\": 148,\n    \"releaseDate\": \"2010-07-16\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/movies",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "movies"]
+        }
+      }
+    },
+    {
+      "name": "Create Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"user\": { \"id\": 1 },\n    \"showtime\": { \"id\": 1 },\n    \"numTickets\": 2\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/bookings",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "bookings"]
+        }
+      }
+    },
+    {
+      "name": "Create Theater",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Grand Cinema\",\n    \"location\": \"Downtown\",\n    \"capacity\": 200\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/theaters",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "theaters"]
+        }
+      }
+    }
+  ]
+}

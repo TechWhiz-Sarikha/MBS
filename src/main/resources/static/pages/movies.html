@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Movies - Movie Ticket Booking</title>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Movie Ticket Booking</h1>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="movies.html" class="active">Movies</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="user-dashboard.html">Dashboard</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="movie-listing">
+      <h2>All Movies</h2>
+      <input type="text" id="search-input" placeholder="Search movies..." />
+      <div id="movies-grid" class="movies-grid"></div>
+    </section>
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/movies.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAllMovies();
+
+      const searchInput = document.getElementById('search-input');
+      searchInput.addEventListener('input', () => {
+        filterMovies(searchInput.value);
+      });
+    });
+
+    let allMovies = [];
+
+    async function loadAllMovies() {
+      try {
+        allMovies = await apiGet('/movies');
+        displayMovies(allMovies);
+      } catch (error) {
+        console.error('Failed to load movies:', error);
+      }
+    }
+
+    function displayMovies(movies) {
+      const grid = document.getElementById('movies-grid');
+      grid.innerHTML = '';
+      movies.forEach(movie => {
+        const card = createMovieCard(movie);
+        grid.appendChild(card);
+      });
+    }
+
+    function filterMovies(query) {
+      const filtered = allMovies.filter(movie =>
+        movie.title.toLowerCase().includes(query.toLowerCase())
+      );
+      displayMovies(filtered);
+    }
+
+    function createMovieCard(movie) {
+      const card = document.createElement('div');
+      card.className = 'movie-card';
+
+      const img = document.createElement('img');
+      img.src = movie.posterUrl || '../assets/images/default-movie.png';
+      img.alt = movie.title;
+
+      const info = document.createElement('div');
+      info.className = 'movie-info';
+
+      const title = document.createElement('h3');
+      title.className = 'movie-title';
+      title.textContent = movie.title;
+
+      const desc = document.createElement('p');
+      desc.className = 'movie-description';
+      desc.textContent = movie.description || 'No description available.';
+
+      info.appendChild(title);
+      info.appendChild(desc);
+
+      card.appendChild(img);
+      card.appendChild(info);
+
+      card.addEventListener('click', () => {
+        window.location.href = `movie-details.html?id=${movie.id}`;
+      });
+
+      return card;
+    }
+  </script>
+</body>
+</html>

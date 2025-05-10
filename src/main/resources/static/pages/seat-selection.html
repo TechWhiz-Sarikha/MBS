@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seat Selection - Movie Ticket Booking</title>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <style>
+    #seat-map {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+      gap: 5px;
+      max-width: 600px;
+      margin: 1rem auto;
+    }
+    .seat {
+      width: 30px;
+      height: 30px;
+      background-color: #2E3B55;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+      user-select: none;
+    }
+    .seat.selected {
+      background-color: #FF5757;
+    }
+    .seat.occupied {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Movie Ticket Booking</h1>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="movies.html">Movies</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="user-dashboard.html">Dashboard</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Select Your Seats</h2>
+      <div id="seat-map"></div>
+      <p>Selected Seats: <span id="selected-seats"></span></p>
+      <button id="confirm-booking-btn" disabled>Confirm Booking</button>
+      <div id="booking-error" class="error-message"></div>
+    </section>
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/seat-selection.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initSeatSelection();
+    });
+  </script>
+</body>
+</html>
