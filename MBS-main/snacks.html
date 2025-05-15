@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+         
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 0;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+}
+.logo i {
+    margin-right: 10px;
+    color: #ff3a8c;
+}
+
+.logo span {
+    color: red;
+}
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0321 0%, #4a0a3c 50%, #1e0a24 100%);
+            min-height: 100vh;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .site-header {
+  width: 100%;
+  padding: 20px;
+  background-color: #1a001f; /* dark header */
+  display: flex;
+  align-items: center;
+  position: fixed; /* keep it visible at top */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .cinema-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.5rem; /* Bigger for emphasis */
+    font-weight: 900;
+    color: #ffcc00; /* Eye-catching yellow */
+    text-transform: uppercase;
+    letter-spacing: 2px; /* Adds a cinematic feel */
+    text-shadow: 5px 5px 15px rgba(255, 165, 0, 1), 
+                 -5px -5px 15px rgba(255, 255, 0, 0.8);
+    animation: glow 1s infinite alternate; /* Pulsing glow */
+}
+
+@keyframes glow {
+    0% { text-shadow: 5px 5px 15px rgba(255, 165, 0, 1); }
+    100% { text-shadow: 10px 10px 30px rgba(255, 140, 0, 1); }
+}
+
+.cinema-header {
+    background: linear-gradient(to right, #2d033b, #38024e);
+    padding: 50px 0; /* Increased padding for more space */
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    height: 500vh; /* Takes up full viewport height */
+}
+
+.cinema-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: orange;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    margin: 0;
+    padding: 0;
+}
+
+.cinema-subheading {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: white;
+}
+
+.cart-container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.cart-heading {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ffcc00;
+}
+
+.cart-summary {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.checkout-btn {
+    background: orange;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(0) translateX(20px);
+            }
+            75% {
+                transform: translateY(20px) translateX(10px);
+            }
+
+        }
+       
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #e91e63, #ff9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(233, 30, 99, 0.3);
+        }
+        
+        .header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+        }
+        
+        .snacks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .snack-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        
+        .snack-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.5);
+        }
+        
+        .snack-image {
+            height: 270px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .snack-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to top, rgba(30, 10, 36, 0.9), transparent);
+        }
+        
+        .snack-details {
+            padding: 20px;
+        }
+        
+        .snack-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        
+        .snack-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 15px;
+            height: 60px;
+            overflow: hidden;
+        }
+        
+        .snack-price {
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(to right, #e91e63, #ff9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #e91e63, #ff9800);
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s;
+            box-shadow: 0 0 10px rgba(233, 30, 99, 0.4);
+        }
+        
+        .quantity-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .quantity-display {
+            width: 40px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .add-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #e91e63, #ff9800);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.4);
+        }
+        
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
+        }
+        
+        .cart-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.5);
+        }
+        
+        .cart-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .cart-item-name {
+            flex: 1;
+            color: #ffffff;
+        }
+        
+        .cart-item-quantity {
+            margin: 0 15px;
+            min-width: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .cart-item-price {
+            min-width: 100px;
+            text-align: right;
+            background: linear-gradient(to right, #e91e63, #ff9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+        
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        
+        .cart-item-remove:hover {
+            color: #e91e63;
+        }
+        
+        .cart-summary {
+            margin-top: 20px;
+            text-align: right;
+        }
+        
+        .cart-total {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #e91e63, #ff9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .checkout-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+        .checkout-btn {
+            padding: 14px 30px;
+            background: linear-gradient(45deg, #e91e63, #ff9800);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.4);
+        }
+        
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 30px 0;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(26, 3, 33, 0.9);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.3s forwards;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .toast.success {
+            border-left: 4px solid #e91e63;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .snacks-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="#" class="logo">
+                <i class="fas fa-film"></i>
+                Cine<span>Lux</span>
+            </a>
+            <div class="nav-links">
+                <!-- You can add Snacks, Home links here if needed -->
+            </div>
+        </header>
+    </div>
+    
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="cinema-heading">Snacks & Refreshments</h1>
+
+            <p>Enhance your movie experience with our delicious treats!</p>
+        </div>
+        
+        <div class="snacks-container" id="snacks-container">
+            <!-- Snack items will be added here dynamically -->
+        </div>
+        
+        <div class="cart-container">
+            <h2 class="cart-title">Your Order</h2>
+            <div class="cart-items" id="cart-items">
+                <div class="empty-cart" id="empty-cart">
+                    Your cart is empty. Add some delicious snacks!
+                </div>
+            </div>
+            <div class="cart-summary">
+                <div class="cart-total" id="cart-total">Total: ₹0.00</div>
+                <button class="checkout-btn" id="checkout-btn">Great choice!</button>
+                <a href="payment.html" class="checkout-btn">Proceed to Checkout</a>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+    
+    <script>
+        // Create particle background
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numberOfParticles = 30;
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 5px and 20px
+                const size = Math.random() * 15 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay
+                particle.style.animationDelay = `${Math.random() * 8}s`;
+                
+                // Random opacity
+                particle.style.opacity = `${Math.random() * 0.5 + 0.1}`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Snacks data with prices in INR
+        const snacks = [
+            {
+                id: 1,
+                name: "Classic cheese pizza ",
+                description: "Freshly popped corn with the perfect blend of salt and butter.",
+                price: 499,
+                image: "popcorn.jpg"
+            },
+            {
+                id: 2,
+                name: "Classic popcorn bucket",
+                description: "Sweet caramel coated popcorn for those with a sweet tooth.",
+                price: 349,
+                image: "caramel-popcorn.jpg"
+            },
+            {
+                id: 3,
+                name: "Normal popcorn ",
+                description: "Savory cheese flavored popcorn that melts in your mouth.",
+                price: 70,
+                image: "cheese-popcorn.jpg"
+            },
+            {
+                id: 4,
+                name: "Nachos & Cheese",
+                description: "Crunchy tortilla chips served with warm cheese sauce.",
+                price: 120,
+                image: "nachos.jpg"
+            },
+            {
+                id: 5,
+                name: "Hot Dog Combo",
+                description: "Juicy hot dog with your choice of toppings and a side of fries.",
+                price: 400,
+                image: "hotdog.jpg"
+            },
+            {
+                id: 6,
+                name: "Chicken Tenders Basket",
+                description: "Crispy chicken tenders served with dipping sauce and fries.",
+                price: 250,
+                image: "chicken-tenders.jpg"
+            },
+            {
+                id: 7,
+                name: "Large Soft Drink",
+                description: "Refreshing soda of your choice with free refills.",
+                price: 70,
+                image: "soda.jpg"
+            },
+            {
+                id: 8,
+                name: "Bottled Water",
+                description: "Pure mineral water to stay hydrated during the movie.",
+                price: 30,
+                image: "water.jpg"
+            },
+            {
+                id: 9,
+                name: "Chocolate Box",
+                description: "Assorted premium chocolates in a convenient movie box.",
+                price: 259,
+                image: "chocolate.jpg"
+            },
+            {
+                id: 10,
+                name: "Gummy Bears",
+                description: "Colorful and chewy fruity gummy bears in a shareable pack.",
+                price: 229,
+                image: "gummy-bears.jpg"
+            },
+            {
+                id: 11,
+                name: "Ice Cream Cone",
+                description: "Creamy vanilla, chocolate, or twist soft serve ice cream.",
+                price: 199,
+                image: "ice-cream.jpg"
+            },
+            {
+                id: 12,
+                name: "Coffee",
+                description: "Freshly brewed coffee to keep you awake during late shows.",
+                price: 179,
+                image: "coffee.jpg"
+            },
+            {
+                id: 13,
+                name: "Movie Combo",
+                description: "Large popcorn, 2 soft drinks, and a candy of your choice.",
+                price: 699,
+                image: "combo.jpg"
+            },
+            {
+                id: 14,
+                name: "Sandwich",
+                description: "sandwich served with cheese dipping sauce.",
+                price: 190,
+                image: "pretzel.jpg"
+            },
+            {
+                id: 15,
+                name: "French Fries",
+                description: "Crispy golden fries seasoned to perfection.",
+                price: 100,
+                image: "fries.jpg"
+            }
+        ];
+
+        // Cart data
+        let cart = [];
+        
+        // DOM elements
+        const snacksContainer = document.getElementById('snacks-container');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart');
+        const cartTotalElement = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const toast = document.getElementById('toast');
+        
+        // Format price in INR
+        function formatPrice(price) {
+            return '₹' + price.toFixed(2);
+        }
+        
+        // Display snacks
+        function displaySnacks() {
+            snacksContainer.innerHTML = '';
+            
+            snacks.forEach(snack => {
+                const snackElement = document.createElement('div');
+                snackElement.classList.add('snack-item');
+                
+                snackElement.innerHTML = `
+                    <div class="snack-image" style="background-image: url('images/${snack.image}'), url('https://via.placeholder.com/300x180?text=${snack.name.replace(' ', '+')}')"></div>
+                    <div class="snack-details">
+                        <div class="snack-name">${snack.name}</div>
+                        <div class="snack-description">${snack.description}</div>
+                        <div class="snack-price">₹${snack.price.toFixed(2)}</div>
+                        <div class="quantity-controls" data-id="${snack.id}">
+                            <button class="quantity-btn decrease">-</button>
+                            <span class="quantity-display">1</span>
+                            <button class="quantity-btn increase">+</button>
+                        </div>
+                        <button class="add-btn" data-id="${snack.id}">Add to Order</button>
+                    </div>
+                `;
+                
+                snacksContainer.appendChild(snackElement);
+                
+                // Add event listeners
+                const decreaseBtn = snackElement.querySelector('.decrease');
+                const increaseBtn = snackElement.querySelector('.increase');
+                const quantityDisplay = snackElement.querySelector('.quantity-display');
+                const addBtn = snackElement.querySelector('.add-btn');
+                
+                decreaseBtn.addEventListener('click', () => {
+                    let quantity = parseInt(quantityDisplay.textContent);
+                    if (quantity > 1) {
+                        quantity--;
+                        quantityDisplay.textContent = quantity;
+                    }
+                });
+                
+                increaseBtn.addEventListener('click', () => {
+                    let quantity = parseInt(quantityDisplay.textContent);
+                    if (quantity < 10) {
+                        quantity++;
+                        quantityDisplay.textContent = quantity;
+                    }
+                });
+                
+                addBtn.addEventListener('click', () => {
+                    const snackId = parseInt(addBtn.getAttribute('data-id'));
+                    const quantity = parseInt(quantityDisplay.textContent);
+                    addToCart(snackId, quantity);
+                });
+            });
+        }
+        
+        // Add item to cart
+        function addToCart(snackId, quantity) {
+            const snack = snacks.find(item => item.id === snackId);
+            
+            if (snack) {
+                // Check if item already in cart
+                const existingItem = cart.find(item => item.id === snackId);
+                
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    cart.push({
+                        id: snack.id,
+                        name: snack.name,
+                        price: snack.price,
+                        quantity: quantity
+                    });
+                }
+                
+                updateCart();
+                showToast(`Added ${quantity} ${snack.name} to your order`, 'success');
+            }
+        }
+        
+        // Update cart display
+        function updateCart() {
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartItemsContainer.innerHTML = '';
+                cartItemsContainer.appendChild(emptyCartMessage);
+            } else {
+                emptyCartMessage.style.display = 'none';
+                
+                // Clear previous items
+                while (cartItemsContainer.firstChild) {
+                    cartItemsContainer.removeChild(cartItemsContainer.firstChild);
+                }
+                
+                // Add current items
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('cart-item');
+                    
+                    cartItem.innerHTML = `
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-quantity">x${item.quantity}</div>
+                        <div class="cart-item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
+                        <button class="cart-item-remove" data-id="${item.id}">×</button>
+                    `;
+                    
+                    cartItemsContainer.appendChild(cartItem);
+                    
+                    // Add remove button event listener
+                    const removeBtn = cartItem.querySelector('.cart-item-remove');
+                    removeBtn.addEventListener('click', () => {
+                        removeFromCart(item.id);
+                    });
+                });
+            }
+            
+            // Update total
+            updateTotal();
+        }
+        
+        // Remove item from cart
+        function removeFromCart(id) {
+            const index = cart.findIndex(item => item.id === id);
+            if (index !== -1) {
+                const removedItem = cart[index];
+                showToast(`Removed ${removedItem.name} from your order`, 'success');
+                cart.splice(index, 1);
+                updateCart();
+            }
+        }
+        
+        // Update total price
+        function updateTotal() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotalElement.textContent = `Total: ₹${total.toFixed(2)}`;
+        }
+        
+        // Show toast message
+        function showToast(message, type = '') {
+            toast.textContent = message;
+            toast.className = 'toast';
+            if (type) {
+                toast.classList.add(type);
+            }
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Checkout function
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!');
+                return;
+            }
+            
+            // In a real application, this would redirect to a checkout page
+            // or open a checkout modal
+            showToast('Proceeding to checkout...', 'success');
+            
+            // For demo purposes, let's just log the order
+            console.log('Order:', cart);
+            
+            // Clear cart after few seconds (simulating order completion)
+            setTimeout(() => {
+                cart = [];
+                updateCart();
+                showToast('Thank you for your order!', 'success');
+            }, 2000);
+        });
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            displaySnacks();
+            updateCart();
+        });
+    </script>
+</body>
+
+</html>

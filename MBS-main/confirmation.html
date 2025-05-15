@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking Confirmed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a0321 0%, #4a0a3c 50%, #1e0a24 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      animation: float 8s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0);
+      }
+      50% {
+        transform: translateY(-20px) translateX(20px);
+      }
+      100% {
+        transform: translateY(0) translateX(0);
+      }
+    }
+
+    .confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 50px;
+      border-radius: 20px;
+      text-align: center;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      z-index: 2;
+    }
+
+    .card h1 {
+      font-size: 3em;
+      color: #00fff7;
+      text-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7;
+      margin: 20px 0 10px;
+    }
+
+    .card p {
+      color: #ffffff;
+      font-size: 1.2em;
+    }
+
+    .card img {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+
+    .home-btn {
+      margin-top: 25px;
+      padding: 12px 25px;
+      font-size: 1em;
+      background: violet;
+      color: #1a0321;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px violet;
+      transition: all 0.3s ease;
+    }
+
+    .home-btn:hover {
+      background: #ffffff;
+      color: #4a0a3c;
+      box-shadow: 0 0 20px #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles" id="particles-container"></div>
+  <div class="confetti" id="confetti-container"></div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" alt="Celebration Icon">
+    <h1>Congratulations!</h1>
+    <p>Payment Successful.</p>
+    <p>Your booking has been confirmed!</p>
+    <button onclick="goHome()" class="home-btn">Return to Home</button>
+  </div>
+
+  <script>
+    // Background particles
+    const particleContainer = document.getElementById("particles-container");
+    for (let i = 0; i < 40; i++) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
+      const size = Math.random() * 10 + 5;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.animationDuration = `${6 + Math.random() * 4}s`;
+      particleContainer.appendChild(particle);
+    }
+
+    // Confetti
+    const confettiContainer = document.getElementById("confetti-container");
+
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.style.position = "absolute";
+      confetti.style.width = "10px";
+      confetti.style.height = "10px";
+      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      confetti.style.left = `${Math.random() * 100}%`;
+      confetti.style.top = "0px";
+      confetti.style.animation = "fall 3s linear infinite";
+      confetti.style.opacity = Math.random();
+      confetti.style.borderRadius = "50%";
+      confettiContainer.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 3000);
+    }
+
+    setInterval(createConfetti, 100);
+
+    const confettiStyle = document.createElement("style");
+    confettiStyle.innerHTML = `
+      @keyframes fall {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(100vh); }
+      }
+    `;
+    document.head.appendChild(confettiStyle);
+
+    // Go Home
+    function goHome() {
+      window.location.href = "movie.html"; // 🔁 Change this to your actual homepage filename if different
+    }
+  </script>
+
+</body>
+</html>
